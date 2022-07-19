@@ -1,3 +1,5 @@
+# Copyright (c) 2022 Paul Vines
+
 import networkx as nx
 import itertools as it
 import drawSvg as draw
@@ -138,8 +140,8 @@ def draw_post(node, posts_to_resources):
                 embed=True,
             )
         )
-    canvas.saveSvg(f"cards/posts/{node}.svg")
-
+    canvas.saveSvg(f"cards/posts/{node}.svg"
+)
 
 def draw_post_cards(board, posts_to_resources):
     for node in board.nodes():

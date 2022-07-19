@@ -1,3 +1,5 @@
+# Copyright (c) 2022 Paul Vines
+
 import networkx as nx
 import itertools as it
 import drawSvg as draw
