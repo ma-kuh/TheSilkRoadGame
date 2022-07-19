@@ -101,7 +101,7 @@ def draw_route_card(name, route_list):
         )
         draw_route(canvas, space, resource, dest, reward)
 
-    canvas.saveSvg(f"{name}.svg")
+    canvas.savePng(f"{name}.png")
 
 
 def draw_post(node, posts_to_resources):
@@ -140,7 +140,7 @@ def draw_post(node, posts_to_resources):
                 embed=True,
             )
         )
-    canvas.saveSvg(f"cards/posts/{node}.svg"
+    canvas.savePng(f"cards/posts/{node}.png"
 )
 
 def draw_post_cards(board, posts_to_resources):
