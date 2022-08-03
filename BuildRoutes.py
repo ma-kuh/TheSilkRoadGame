@@ -72,6 +72,7 @@ def flip_route(route):
 
 
 def make_all_triple_routes(board=BOARD):
+    global resource_to_all_routes
     if resource_to_all_routes is None:
         resource_to_all_routes = {
             resource: [

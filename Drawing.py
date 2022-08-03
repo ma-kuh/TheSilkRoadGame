@@ -6,6 +6,7 @@ import drawSvg as draw
 import os
 import random
 import subprocess
+import shutil
 
 
 POST_CARD_SIZE = (200, 150)
@@ -66,7 +67,7 @@ def draw_route(canvas, space, resource, dest, reward):
         )
     )
 
-    text_length = (space.width - (icon_diam * 2)) * (9 // 10)
+    text_length = (space.width - (icon_diam * 2)) * (9 / 10)
     canvas.append(
         draw.Text(
             f"{dest}",
@@ -79,7 +80,7 @@ def draw_route(canvas, space, resource, dest, reward):
     )
 
 
-def draw_route_card(name, route_list):
+def draw_contract_card(name, route_list):
     canvas = draw.Drawing(ROUTE_CARD_SIZE[0], ROUTE_CARD_SIZE[1])
     r = draw.Rectangle(
         0,
@@ -103,7 +104,7 @@ def draw_route_card(name, route_list):
         )
         draw_route(canvas, space, resource, dest, reward)
 
-    canvas.savePng(f"{name}.png")
+    canvas_to_png(canvas, name)
 
 
 def draw_post(node, posts_to_resources):
@@ -146,22 +147,33 @@ def draw_post(node, posts_to_resources):
 
 
 def canvas_to_png(canvas, name):
+    os.makedirs(f"tmp/{os.path.dirname(name)}", exist_ok=True)
     canvas.saveSvg(f"tmp/{name}.svg")
-    subprocess.call(
-        [
-            "inkscape",
-            "-z",
-            "-e",
-            f"cards/posts/{name}.png",
-            f"tmp/{name}.svg",
-        ]
-    )
+    subprocess.call(["inkscape", "-z", "-e", f"{name}.png", f"tmp/{name}.svg"])
 
 
 def draw_post_cards(board, posts_to_resources):
     for node in board.nodes():
         if "extra" not in node:
             draw_post(node, posts_to_resources)
+
+
+def shuffle_contracts(game_name="new-game"):
+    os.makedirs(f"{game_name}/cards/contracts", exist_ok=True)
+    contract_files = os.listdir("./cards/contracts/")
+    random.shuffle(contract_files)
+    for idx, fn in enumerate(contract_files):
+        shutil.copy(
+            f"./cards/contracts/{fn}", f"./{game_name}/cards/contracts/{idx}.png"
+        )
+
+
+def shuffle_events(game_name="new-game"):
+    os.makedirs(f"{game_name}/cards/events", exist_ok=True)
+    contract_files = os.listdir("./cards/events/")
+    random.shuffle(contract_files)
+    for idx, fn in enumerate(contract_files):
+        shutil.copy(f"./cards/events/{fn}", f"./{game_name}/cards/events/{idx}.png")
 
 
 GAME_SIZE = [9_000, 9_000]
@@ -197,51 +209,52 @@ def setup_game(num_players=3):
         )
     )
 
-    left_mat_space = Space(
-        0, GAME_SIZE[1] - HOR_PLAYMAT_SIZE[1], HOR_PLAYMAT_SIZE[0], HOR_PLAYMAT_SIZE[1]
-    )
-    draw_playmat(canvas, left_mat_space, "blue")
+    # # Bunch of code for drawing a single monolithic SVG which does not work at all for Google Draw
+    # left_mat_space = Space(
+    #     0, GAME_SIZE[1] - HOR_PLAYMAT_SIZE[1], HOR_PLAYMAT_SIZE[0], HOR_PLAYMAT_SIZE[1]
+    # )
+    # draw_playmat(canvas, left_mat_space, "blue")
 
-    right_mat_space = Space(
-        GAME_SIZE[0] - HOR_PLAYMAT_SIZE[0],
-        GAME_SIZE[1] - HOR_PLAYMAT_SIZE[1],
-        HOR_PLAYMAT_SIZE[0],
-        HOR_PLAYMAT_SIZE[1],
-    )
-    draw_playmat(canvas, right_mat_space, "red")
+    # right_mat_space = Space(
+    #     GAME_SIZE[0] - HOR_PLAYMAT_SIZE[0],
+    #     GAME_SIZE[1] - HOR_PLAYMAT_SIZE[1],
+    #     HOR_PLAYMAT_SIZE[0],
+    #     HOR_PLAYMAT_SIZE[1],
+    # )
+    # draw_playmat(canvas, right_mat_space, "red")
 
-    bottom_mat_space = Space(
-        (GAME_SIZE[0] - VER_PLAYMAT_SIZE[0]) // 2,
-        top_space - BOARD_IMG_SIZE[1],
-        VER_PLAYMAT_SIZE[0],
-        VER_PLAYMAT_SIZE[1],
-    )
-    draw_playmat(canvas, bottom_mat_space, "green")
+    # bottom_mat_space = Space(
+    #     (GAME_SIZE[0] - VER_PLAYMAT_SIZE[0]) // 2,
+    #     top_space - BOARD_IMG_SIZE[1],
+    #     VER_PLAYMAT_SIZE[0],
+    #     VER_PLAYMAT_SIZE[1],
+    # )
+    # draw_playmat(canvas, bottom_mat_space, "green")
 
-    if num_players > 3:
-        top_mat_space = Space(
-            (GAME_SIZE[0] - VER_PLAYMAT_SIZE[0]) // 2,
-            top_space + BOARD_IMG_SIZE[1],
-            VER_PLAYMAT_SIZE[0],
-            VER_PLAYMAT_SIZE[1],
-        )
-        draw_playmat(canvas, top_mat_space, "yellow")
+    # if num_players > 3:
+    #     top_mat_space = Space(
+    #         (GAME_SIZE[0] - VER_PLAYMAT_SIZE[0]) // 2,
+    #         top_space + BOARD_IMG_SIZE[1],
+    #         VER_PLAYMAT_SIZE[0],
+    #         VER_PLAYMAT_SIZE[1],
+    #     )
+    #     draw_playmat(canvas, top_mat_space, "yellow")
 
-    bank_space = Space(
-        bottom_mat_space.x0, top_space - BANK_SIZE[1], BANK_SIZE[0], BANK_SIZE[1]
-    )
-    draw_bank(canvas, bank_space)
+    # bank_space = Space(
+    #     bottom_mat_space.x0, top_space - BANK_SIZE[1], BANK_SIZE[0], BANK_SIZE[1]
+    # )
+    # draw_bank(canvas, bank_space)
 
-    contract_deck_space = Space(
-        GAME_SIZE[0] // 2,
-        bottom_mat_space.y0 - (GAME_SIZE[1] // 10),
-        POST_CARD_SIZE[0],
-        POST_CARD_SIZE[1],
-    )
-    draw_contract_deck(canvas, contract_deck_space)
+    # contract_deck_space = Space(
+    #     GAME_SIZE[0] // 2,
+    #     bottom_mat_space.y0 - (GAME_SIZE[1] // 10),
+    #     POST_CARD_SIZE[0],
+    #     POST_CARD_SIZE[1],
+    # )
+    # draw_contract_deck(canvas, contract_deck_space)
 
-    # canvas.savePng(f"board.png")
-    canvas.saveSvg(f"board.svg")
+    # # canvas.savePng(f"board.png")
+    # canvas.saveSvg(f"board.svg")
 
 
 def draw_contract_deck(canvas, space):
