@@ -143,7 +143,7 @@ def draw_post(node, posts_to_resources):
                 embed=True,
             )
         )
-    canvas_to_png(canvas, node)
+    canvas_to_png(canvas, f'./cards/posts/{node}')
 
 
 def canvas_to_png(canvas, name):
