@@ -167,6 +167,16 @@ def shuffle_contracts(game_name="new-game"):
             f"./cards/contracts/{fn}", f"./{game_name}/cards/contracts/{idx}.png"
         )
 
+ 
+def shuffle_investments(game_name="new-game"):
+    os.makedirs(f"{game_name}/cards/investments", exist_ok=True)
+    contract_files = os.listdir("./cards/investments/")
+    random.shuffle(contract_files)
+    for idx, fn in enumerate(contract_files):
+        shutil.copy(
+            f"./cards/investments/{fn}", f"./{game_name}/cards/investments/{idx}.png"
+        )
+
 
 def shuffle_events(game_name="new-game"):
     os.makedirs(f"{game_name}/cards/events", exist_ok=True)

@@ -1,0 +1,64 @@
+Title: Specialist, 5GP, 3VP
+At the end of the game, gain VP based on the number of routes completed for a single resource. If you own this card multiple times, a different resource must be selected for each card.
+1-3 Routes: 1VP
+4-6 Routes: 3VP
+7+ Routes: 5VP
+Title: Generalist, 5GP, 3VP
+At the end of the game, gain VP based on the number of resources you have completed routes for.
+1-3 Resources: 1VP
+4-5 Resources: 3VP
+All 6 Resources: 5VP
+Title: Local Patron, 3GP, 0VP
+Once per round before shipping, declare a post you control to patronize: other players pay tariffs for that post to the bank instead of to you; you gain 1VP for each player that ships across the post.
+Title: Exotic Souvenirs, 3GP, 3VP, 4
+Blank.
+Title: Palazzo, 5GP, 5VP, 4
+Blank.
+Title: Patron of the Arts, 3GP, 2VP
+Once-per-round, pay 1GP for 1VP.
+Title: Horselord, 3GP, 1VP
+Gain 1V when you gain control of each of the following posts: Turfan, Kashgar, Samarkand, Atil, Cherson
+Title: Shrinebuilder, 5GP, 1VP
+Gain 1VP when you gain control of each of the following posts: Dunhuang, Turfan, Khotan, Kashgar, Delhi, Balkh, Xian
+Title: Mosquebuilder, 5GP, 1VP
+Gain 1VP when you gain control of each of the following posts: Medina, Palmyra, Baghdad, Alexandria, Tripoli, Merv, Rayy, Samarkand
+Title: Churchbuilder, 3GP, 1VP
+Gain 1VP when you gain control of each of the following posts: Venice, Constantinople, Kiev, Cherson
+Title: Client-focused, 5GP, 2VP
+Each round you complete shipments to two or fewer unique destinations, gain 2VP.
+Title: Manor House, 7GP, 5VP
+Gain 1GP at the start of the round.
+Title: Travel Literature, 4GP, 2VP
+Earn 2VP each round you have the longest shipment completed (measured by your route, not the shortest route possible).
+Title: Missionaries, 3GP, 1VP
+Gain an additional 1VP for controlling each of the following posts: Venice, Medina, Delhi, Xi’an, Tripoli, Kiev.
+Title: Political Aspirations, 7GP, 3VP
+Each round, instead of completing a route by shipping, mark it completed and gain 2VP (do not collect its reward).
+Title: Careful Insults, 3GP, 0VP
+Each round before shipping, mark one connection to a trade post you own with an additional Extra Cost +1GP marker. This is removed at the end of the round.
+Title: Undercut, 1GP, 0VP
+Once this game, before the Acquisition phase, force a post listed as a destination on an uncompleted route to go up for auction (as with competition). You must complete this route this round.
+Title: Liquidation Expert, 3GP, 1VP
+Whenever a trade post you own is put up for auction (either by an event or competition) you gain 2GP.
+Title: Translators, 5GP, 2VP
+Each round, pay no tariffs for using one trade post.
+Title: Corrupt Customs, 4GP, 2VP
+For one trade post you control each round, take 1GP from the bank for each other player’s shipment that passes through it.
+Title: Convincing Marketers, 1GP, 0VP
+Once this game, unmark one completed route, enabling it to be completed again (move the marker to this card to indicate it has been used).
+Title: Smugglers, 2GP, 1VP
+For one trade post each round, only pay tariffs once regardless of the number of routes passing through it.
+Title: Caravanserai, 2GP, 1VP
+Each round, ignore one Extra Cost connection.
+Title: Forwarding Agent, 7GP, 4VP
+Pay no additional cost for purchasing multiple Market cards.
+Title: Market Stalls, 3GP, 2VP
+When you complete the shortest route on a Contract card, gain an additional 1GP.
+Title: Warehouses, 3GP, 2VP
+Ignore Short Supply effects.
+Title: Public Investment, 3GP, 1VP
+When calculating interest, gain 1DP for every 4DP instead of every 3DP.
+Title: Procurement Agent, 7GP, 3VP
+Draw an additional Investment or Contract card during the Market phase.
+Title: Bulk Shipping, 7GP, 3VP
+Each round, you may double tariff costs paid on one shipment but increase its reward by 3GP.

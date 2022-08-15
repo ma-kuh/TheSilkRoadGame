@@ -1,0 +1,52 @@
+Title: Imperious Taxes
+Doubled Tariffs: any coin paid for a tariff, pay an additional coin to the bank.
+Title: Friend of Merchants
+No Tariffs for: Atil, Baku, Palmyra, Baghdad, Rayy, Merv, Samarkand, Balkh, Kashgar
+Title: Imperial Wars
+Extra Cost: +1 cost for the following connections: Alexandria-Palmyra, Constantinople-Palmyra, Dunhuang-Turfan, Dunhuang-Khotan, Merv-Rayy, Merv-Baku
+Title: Political Unrest
+Disorder: each player loses control of one trade post of their choice.
+Title: Steppe Wars
+Disruption: the following connections are unavailable: Cherson-Atil, Atil-Samarkand, Kashgar-Turfan
+Title: Building Baghdad
+New Route Baghdad: each player may only complete this route once, the value for each resource is:
+Incense - 2GP
+Glass - 3GP
+Wine - 3GP
+Furs - 4GP
+Spices - 4GP
+Silk - 7GP
+Title: Religious Tensions
+Extra Cost: +1 cost of the following connections: Constantinople-Palmyra, Balkh-Delhi, Samarkand-Kashgar, Balkh-Kashgar, Atil-Baku, Constantinople-Baku
+Title: Splendid Caliphate
+High Demand: +2GP to all routes ending in one of the following posts: Alexandria, Palmyra, Baghdad, Medina, Rayy, Merv, Samarkand, Balkh
+Commerce Events
+Title: Silver Arbitrage
+Good Market: +2GP any resource Dunhuang, Khotan, Turfan, Xi’an
+Title: New Tastes: Tea
+Good Market: +2GP spices anywhere
+Title: New Tastes: Porcelain
+Good Market: +2GP silk anywhere
+Title: New Fashions: Amber
+Good Market: +2GP fur anywhere
+Title: New Goods: African Gold
+Good Market: +2GP glass anywhere
+Title: New Goods: Wool
+Good Market: +2GP wine anywhere
+Title: New Goods: Ivory
+Good Market: +2GP incense anywhere
+Title: Italian Wealth
+Short Supply: -2GP wine
+Title: Samarkand Glass
+Bad Market: -2GP glass anywhere
+New Source: glass Samarkand
+Title: Rus Tribute
+Short Supply: -2GP furs
+Title: Smuggled Silkworms
+Bad Market: -3GP silk anywhere
+New Source: silk Constantinople
+Title: Spice Fleet Arrives
+Bad Market: -3GP spices anywhere
+New Source: spices Venice, Tripoli
+Title: Arab Strife
+Short Supply: -2GP incense
