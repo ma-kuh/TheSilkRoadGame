@@ -29,6 +29,7 @@ edges = [
     ("Merv", "Balkh"),
     ("Balkh", "Delhi"),
     ("Delhi", "extra5"),
+    ("Calicut", "Delhi"),
     ("extra5", "Khotan"),
     ("Samarkand", "Kashgar"),
     ("Kashgar", "Khotan"),
@@ -43,7 +44,7 @@ RESOURCES = {
     "fur": "Kiev",
     "wine": "Venice",
     "glass": "Tripoli",
-    "spices": "Delhi",
+    "spices": "Calicut",
     "incense": "Medina",
 }
 POSTS_TO_RESOURCES = {v: k for k, v in RESOURCES.items()}
