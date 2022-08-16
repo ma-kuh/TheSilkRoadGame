@@ -52,6 +52,8 @@ POSTS_TO_RESOURCES = {v: k for k, v in RESOURCES.items()}
 
 BOARD = nx.Graph(edges)
 
+REAL_NODES = {n for n in BOARD.nodes if 'extra' not in n}
+
 
 def get_dsts(src, length, board=BOARD):
     return {

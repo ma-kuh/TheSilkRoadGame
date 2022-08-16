@@ -5,7 +5,7 @@ import itertools as it
 import drawSvg as draw
 import random
 
-from Board import RESOURCES, BOARD, POSTS_TO_RESOURCES, get_dsts, distance
+from Board import REAL_NODES, RESOURCES, BOARD, POSTS_TO_RESOURCES, get_dsts, distance
 
 resource_to_all_routes = None
 SHORT_ROUTE = [2, 5]
@@ -13,6 +13,37 @@ MED_ROUTE = [5, 8]
 LONG_ROUTE = [8, 12]
 FLAT_REWARD = 2
 
+def gen_gateways(board=BOARD):
+    gateways = set()
+    for _,source in RESOURCES.items():
+        gateways.update(nx.neighbors(board, source))
+
+    return gateways
+
+def gen_outposts(board=BOARD):
+    resource_to_outposts = {}
+    gateways = gen_gateways(board)
+    for gw in gateways:
+        neighbors = set(nx.neighbors(board, gw))
+        sources = {n for n in neighbors if n in POSTS_TO_RESOURCES}
+        for s in sources:
+            resource_to_outposts[s] = {n for n in neighbors if n not in sources}
+        
+    return resource_to_outposts
+
+        
+def gen_all_routes(board=BOARD):
+    min_dist = 2
+    gateways = gen_gateways(board)
+    resource_to_outposts = gen_outposts(board)
+    dm = dict(nx.all_pairs_shortest_path_length(BOARD))
+
+    short_routes = [(res, dst, dm[src][dst]) for res,src in RESOURCES.items() for dst in REAL_NODES if dm[src][dst] in range(*SHORT_ROUTE)]
+    med_routes = [(res, dst, dm[src][dst]) for res,src in RESOURCES.items() for dst in REAL_NODES if dm[src][dst] in range(*MED_ROUTE)]
+    long_routes = [(res, dst, dm[src][dst]) for res,src in RESOURCES.items() for dst in REAL_NODES if dm[src][dst] in range(*LONG_ROUTE)]
+
+    return short_routes,med_routes,long_routes
+    
 
 def make_triple_route(anchor, existing_routes=set(), board=BOARD):
     if anchor in RESOURCES:
