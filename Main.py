@@ -6,7 +6,7 @@ import drawSvg as draw
 import random
 
 from BuildRoutes import gen_contracts_for_resources, value_all_triples
-from Drawing import draw_contract_card, draw_post_cards
+from Drawing import stdout_contract_card, draw_contract_card, draw_post_cards
 from Board import BOARD, POSTS_TO_RESOURCES
 
 
@@ -15,6 +15,10 @@ def generate_contract_cards(num_cards=None):
     for idx, triple in enumerate(valued):
         draw_contract_card(f"cards/contracts/{idx}", triple)
 
+def stdout_contract_cards(num_cards=None):
+    valued = gen_contracts_for_resources()
+    for idx, triple in enumerate(valued):
+        stdout_contract_card(triple)
 
 def generate_post_cards():
     draw_post_cards(BOARD, POSTS_TO_RESOURCES)

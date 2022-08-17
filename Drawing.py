@@ -107,6 +107,14 @@ def draw_contract_card(name, route_list):
     canvas_to_png(canvas, name)
 
 
+def stdout_contract_card(contract):
+    print("===")
+    for route in contract:
+        res, dst, val = route
+        print(f"{res}: {dst} ({val})")
+    
+
+
 def draw_post(node, posts_to_resources):
     canvas = draw.Drawing(POST_CARD_SIZE[0], POST_CARD_SIZE[1])
     canvas.append(
