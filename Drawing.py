@@ -8,7 +8,6 @@ import random
 import subprocess
 import shutil
 
-
 POST_CARD_SIZE = (200, 150)
 COLOR_POST_STROKE = "#741b47"
 COLOR_POST_FILL = "#ead1dc"
@@ -107,12 +106,11 @@ def draw_contract_card(name, route_list):
     canvas_to_png(canvas, name)
 
 
-def stdout_contract_card(contract):
-    print("===")
+def stdout_contract_card(contract, heading='===', delimiter=': '):
+    print(heading)
     for route in contract:
         res, dst, val = route
-        print(f"{res}: {dst} ({val})")
-    
+        print(f"{res}{delimiter}{dst}{delimiter}{val}")
 
 
 def draw_post(node, posts_to_resources):

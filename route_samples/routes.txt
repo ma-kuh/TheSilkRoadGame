@@ -1,0 +1,192 @@
+- Route 0
+glass,Dunhuang,12
+silk,Samarkand,7
+silk,Khotan,5
+- Route 1
+wine,Dunhuang,11
+silk,Baku,9
+silk,Turfan,5
+- Route 2
+fur,Dunhuang,11
+silk,Balkh,8
+silk,Khotan,5
+- Route 3
+spices,Xian,8
+silk,Calicut,8
+silk,Delhi,7
+- Route 4
+glass,Dunhuang,12
+silk,Baku,9
+spices,Dunhuang,7
+- Route 5
+fur,Kashgar,9
+incense,Kashgar,9
+silk,Kashgar,6
+- Route 6
+silk,Venice,12
+silk,Calicut,8
+silk,Khotan,5
+- Route 7
+silk,Cherson,11
+fur,Rayy,8
+fur,Constantinople,5
+- Route 8
+spices,Cherson,10
+fur,Samarkand,8
+fur,Palmyra,6
+- Route 9
+spices,Cherson,10
+fur,Baku,7
+fur,Palmyra,6
+- Route 10
+wine,Kiev,6
+fur,Venice,6
+fur,Constantinople,5
+- Route 11
+spices,Cherson,10
+fur,Samarkand,8
+incense,Cherson,6
+- Route 12
+silk,Rayy,9
+spices,Rayy,7
+incense,Rayy,6
+- Route 13
+fur,Calicut,11
+fur,Samarkand,8
+fur,Medina,7
+- Route 14
+silk,Constantinople,11
+wine,Kashgar,9
+wine,Alexandria,5
+- Route 15
+silk,Constantinople,11
+wine,Kashgar,9
+wine,Alexandria,5
+- Route 16
+silk,Constantinople,11
+wine,Samarkand,8
+wine,Cherson,5
+- Route 17
+spices,Venice,10
+wine,Calicut,10
+wine,Delhi,9
+- Route 18
+spices,Constantinople,9
+wine,Kashgar,9
+glass,Constantinople,5
+- Route 19
+fur,Baghdad,7
+wine,Baghdad,6
+glass,Baghdad,6
+- Route 20
+wine,Xian,12
+wine,Calicut,10
+wine,Tripoli,6
+- Route 21
+silk,Alexandria,12
+glass,Merv,8
+glass,Palmyra,5
+- Route 22
+spices,Alexandria,10
+glass,Rayy,7
+glass,Constantinople,5
+- Route 23
+silk,Alexandria,12
+glass,Atil,8
+glass,Constantinople,5
+- Route 24
+fur,Tripoli,7
+glass,Kiev,7
+glass,Cherson,6
+- Route 25
+spices,Alexandria,10
+glass,Atil,8
+wine,Alexandria,5
+- Route 26
+glass,Balkh,9
+fur,Balkh,9
+spices,Balkh,5
+- Route 27
+glass,Calicut,11
+glass,Rayy,7
+glass,Venice,6
+- Route 28
+glass,Delhi,10
+spices,Kashgar,7
+spices,Khotan,6
+- Route 29
+fur,Delhi,10
+spices,Baghdad,8
+spices,Balkh,5
+- Route 30
+fur,Delhi,10
+spices,Baghdad,8
+spices,Merv,6
+- Route 31
+silk,Calicut,8
+spices,Xian,8
+spices,Dunhuang,7
+- Route 32
+incense,Delhi,9
+wine,Delhi,9
+spices,Baghdad,8
+- Route 33
+glass,Merv,8
+fur,Merv,8
+wine,Merv,7
+- Route 34
+spices,Tripoli,11
+spices,Medina,10
+spices,Balkh,5
+- Route 35
+silk,Palmyra,11
+incense,Kashgar,9
+incense,Cherson,6
+- Route 36
+silk,Palmyra,11
+incense,Balkh,8
+incense,Cherson,6
+- Route 37
+silk,Palmyra,11
+incense,Atil,8
+incense,Cherson,6
+- Route 38
+fur,Medina,7
+incense,Kiev,7
+incense,Cherson,6
+- Route 39
+silk,Palmyra,11
+incense,Kashgar,9
+glass,Palmyra,5
+- Route 40
+glass,Samarkand,9
+silk,Samarkand,7
+spices,Samarkand,7
+- Route 41
+incense,Xian,12
+incense,Calicut,10
+incense,Venice,6
+- Route 42
+fur,Dunhuang,11
+silk,Delhi,7
+silk,Turfan,5
+- Route 43
+silk,Cherson,11
+fur,Kashgar,9
+fur,Constantinople,5
+- Route 44
+silk,Constantinople,11
+wine,Delhi,9
+wine,Palmyra,5
+- Route 45
+spices,Alexandria,10
+glass,Rayy,7
+glass,Cherson,6
+- Route 46
+glass,Delhi,10
+spices,Constantinople,9
+spices,Merv,6
+- Route 47
+silk,Palmyra,11
+incense,Delhi,9
+incense,Cherson,6
