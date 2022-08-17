@@ -5,25 +5,19 @@ import itertools as it
 import drawSvg as draw
 import random
 
-from Board import REAL_NODES, RESOURCES, BOARD, POSTS_TO_RESOURCES, get_dsts, distance
+from Board import IMPORTANT_DESTS, GATEWAYS, GW_TO_SOURCE, DM, REAL_NODES, RESOURCES, BOARD, POSTS_TO_RESOURCES, get_dsts, distance
 
 resource_to_all_routes = None
-SHORT_ROUTE = [2, 5]
-MED_ROUTE = [5, 8]
-LONG_ROUTE = [8, 12]
+SHORT_ROUTE = [2, 4]
+MED_ROUTE = [4, 7]
+LONG_ROUTE = [7, 12]
 FLAT_REWARD = 2
 
-def gen_gateways(board=BOARD):
-    gateways = set()
-    for _,source in RESOURCES.items():
-        gateways.update(nx.neighbors(board, source))
+dst_contracts = set()
 
-    return gateways
-
-def gen_outposts(board=BOARD):
+def gen_outposts():
     resource_to_outposts = {}
-    gateways = gen_gateways(board)
-    for gw in gateways:
+    for gw in GATEWAYS.values():
         neighbors = set(nx.neighbors(board, gw))
         sources = {n for n in neighbors if n in POSTS_TO_RESOURCES}
         for s in sources:
@@ -31,116 +25,112 @@ def gen_outposts(board=BOARD):
         
     return resource_to_outposts
 
-        
-def gen_all_routes(board=BOARD):
-    min_dist = 2
-    gateways = gen_gateways(board)
-    resource_to_outposts = gen_outposts(board)
-    dm = dict(nx.all_pairs_shortest_path_length(BOARD))
+def gen_nml():
+    non_nml = set(GATEWAYS.keys()).union(set(GATEWAYS.values()))
+    return {n for n in REAL_NODES if n not in non_nml}
 
-    short_routes = [(res, dst, dm[src][dst]) for res,src in RESOURCES.items() for dst in REAL_NODES if dm[src][dst] in range(*SHORT_ROUTE)]
-    med_routes = [(res, dst, dm[src][dst]) for res,src in RESOURCES.items() for dst in REAL_NODES if dm[src][dst] in range(*MED_ROUTE)]
-    long_routes = [(res, dst, dm[src][dst]) for res,src in RESOURCES.items() for dst in REAL_NODES if dm[src][dst] in range(*LONG_ROUTE)]
+        
+def gen_all_routes():
+    min_dist = 2
+    resource_to_outposts = gen_outposts(board)
+
+    short_routes = [(res, dst, DM[src][dst]) for res,src in RESOURCES.items() for dst in REAL_NODES if DM[src][dst] in range(*SHORT_ROUTE)]
+    med_routes = [(res, dst, DM[src][dst]) for res,src in RESOURCES.items() for dst in REAL_NODES if DM[src][dst] in range(*MED_ROUTE)]
+    long_routes = [(res, dst, DM[src][dst]) for res,src in RESOURCES.items() for dst in REAL_NODES if DM[src][dst] in range(*LONG_ROUTE)]
 
     return short_routes,med_routes,long_routes
+
+
+def gen_pref_gw_routes(src, dist_range):
+    routes = [(src, dst) for dst in GATEWAYS.values() if DM[src][dst] in dist_range]
+    if len(routes) == 0:
+        routes = [(src, dst) for dst in gen_nml() if DM[src][dst] in dist_range]
+
+    random.shuffle(routes)
+    return routes
+
+
+def gen_routes_for_dst(dst, dist_range):
+    routes = [(src, dst) for src in RESOURCES.values() if DM[src][dst] in dist_range]
+    random.shuffle(routes)
+    return routes
+
+
+def gen_nml_routes(src, dist_range):
+    routes = [(src, dst) for dst in gen_nml() if DM[src][dst] in dist_range]
+    random.shuffle(routes)
+    return routes
+
+
+def gen_start_contract(resource):
+    src = RESOURCES[resource]
+    shorts = gen_pref_gw_routes(src, range(*SHORT_ROUTE))
+    meds = gen_pref_gw_routes(src, range(*MED_ROUTE))
+    longs = gen_routes_for_dst(GATEWAYS[src], range(*LONG_ROUTE))
+    return (shorts[0], meds[0], longs[0])
+
+
+def gen_typical_contract(resource):
+    src = RESOURCES[resource]
+    shorts = gen_pref_gw_routes(src, range(*SHORT_ROUTE))
+    meds = gen_nml_routes(src, range(*MED_ROUTE))
+    longs = gen_routes_for_dst(GATEWAYS[src], range(*LONG_ROUTE))
+    return (shorts[0], meds[0], longs[0])
+
+
+def gen_narrow_contract(resource):
+    src = RESOURCES[resource]
+    to_gw = gen_pref_gw_routes(src, range(SHORT_ROUTE[0], MED_ROUTE[1]))[0]
+    other_src = GW_TO_SOURCE[to_gw[1]]
+    from_source = (other_src, src)
+    to_source = (src, other_src)
+    return (to_gw, from_source, to_source)
+
+
+def gen_3res_contract(resource):
+    src = RESOURCES[resource]
+    gw = GATEWAYS[src]
+    r1 = gen_routes_for_dst(gw, range(SHORT_ROUTE[0], MED_ROUTE[1]))[0]
+    r2 = gen_routes_for_dst(gw, range(MED_ROUTE[0], LONG_ROUTE[1]))[0]
+    while (r1[0] == r2[0]):
+        r2 = gen_routes_for_dst(gw, range(MED_ROUTE[0], LONG_ROUTE[1]))[0]
+        
+    from_src = gen_nml_routes(src, range(MED_ROUTE[0], LONG_ROUTE[1]))[0]
+    return (r1, r2, from_src)
+
+
+def gen_dst_contract(resource=None):
+    global dst_contracts
+    nml = list(IMPORTANT_DESTS.difference(dst_contracts))
+    random.shuffle(nml)
+    dst = nml[0]
+    dst_contracts.add(dst)
     
+    return gen_routes_for_dst(dst, range(SHORT_ROUTE[0], LONG_ROUTE[1]))[:3]
+ 
 
-def make_triple_route(anchor, existing_routes=set(), board=BOARD):
-    if anchor in RESOURCES:
-        anchor_resource = anchor
-        anchor_post = RESOURCES[anchor_resource]
-    else:
-        anchor_post = anchor
-        anchor_resource = POSTS_TO_RESOURCES[anchor_post]
+def gen_src_contract(resource):
+    src = RESOURCES[resource]
+    routes = []
+    for dist_range in [range(*SHORT_ROUTE), range(*MED_ROUTE), range(*LONG_ROUTE)]:
+        route = gen_pref_gw_routes(src, dist_range)[0]
+        routes.append((src, GW_TO_SOURCE.get(route[1], route[1])))
 
-    short_routes = set(
-        it.chain(
-            *resource_to_all_routes[anchor_resource][SHORT_ROUTE[0] : SHORT_ROUTE[1]]
-        )
-    )
-    short_routes = list(
-        short_routes.difference(
-            {dst for resource, dst in existing_routes if resource == anchor_resource}
-        )
-    )
-    if len(short_routes) == 0:
-        print(f"No short_routes left for {anchor_resource}")
-
-    med_routes = set(
-        it.chain(*resource_to_all_routes[anchor_resource][MED_ROUTE[0] : MED_ROUTE[1]])
-    )
-    med_routes = list(
-        med_routes.difference(
-            {dst for resource, dst in existing_routes if resource == anchor_resource}
-        )
-    )
-    if len(med_routes) == 0:
-        print(f"No med_routes left for {anchor_resource}")
-
-    long_routes = set(
-        it.chain(
-            *resource_to_all_routes[anchor_resource][LONG_ROUTE[0] : LONG_ROUTE[1]]
-        )
-    )
-    long_routes = list(
-        long_routes.difference(
-            {dst for resource, dst in existing_routes if resource == anchor_resource}
-        )
-    )
-    if len(long_routes) == 0:
-        print(f"No long_routes left for {anchor_resource}")
-
-    return (
-        (anchor_resource, short_routes[int(random.random() * len(short_routes))]),
-        (anchor_resource, med_routes[int(random.random() * len(med_routes))]),
-        (anchor_resource, long_routes[int(random.random() * len(long_routes))]),
-    )
+    return routes
 
 
-def flip_route(route):
-    if route[1] in POSTS_TO_RESOURCES:
-        return (POSTS_TO_RESOURCES[route[1]], RESOURCES[route[0]])
-
-
-def make_all_triple_routes(board=BOARD):
-    global resource_to_all_routes
-    if resource_to_all_routes is None:
-        resource_to_all_routes = {
-            resource: [
-                get_dsts(RESOURCES[resource], distance, BOARD)
-                for distance in range(0, 12)
-            ]
-            for resource in RESOURCES
-        }
-    all_routes = []
-    triple_list = []
-    for resource in RESOURCES:
-        while True:
-            try:
-                triple = make_triple_route(resource, all_routes)
-            except IndexError:
-                break
-
-            triple_list.append(triple)
-            all_routes.extend(triple)
-
-    new_triple_list = []
-    for triple in triple_list:
-        new_triple = list(triple)
-        random.shuffle(new_triple)
-        for route in new_triple:
-            flip = flip_route(route)
-            if flip:
-                triple = (flip, *[e for e in new_triple if e is not route])
-                break
-
-        new_triple_list.append(triple)
-
-    return new_triple_list
+contract_dist_per_resource = {
+    gen_typical_contract: 3,
+    gen_narrow_contract: 1,
+    gen_3res_contract: 1,
+    gen_dst_contract: 1,
+    gen_src_contract: 1,
+}
 
 
 def value_route(route):
-    return (*route, distance(RESOURCES[route[0]], route[1]) + FLAT_REWARD)
+    resource = POSTS_TO_RESOURCES[route[0]]
+    return (resource, route[1], distance(route[0], route[1]) + FLAT_REWARD)
 
 
 def value_triple(triple):
@@ -154,3 +144,27 @@ def value_triple(triple):
 
 def value_all_triples(triple_list):
     return [value_triple(triple) for triple in triple_list]
+
+
+def gen_contracts_for_resources():
+    contract_stems = []
+    for res in RESOURCES.keys():
+        for func, count in contract_dist_per_resource.items():
+            for _ in range(count):
+                contract = func(res)
+                # print(str(func), contract)
+                if contract is None:
+                    print(f"ERROR: {str(func)} {res}")
+                    continue
+                    
+                if any(len(r) == 0 for r in contract):
+                    print(f"ERROR: {str(func)} {res} {contract}")
+                    continue
+                
+                contract_stems.append(contract)
+
+    for res in RESOURCES.keys():
+        contract_stems.append(gen_start_contract(res))
+
+    valued = value_all_triples(contract_stems)
+    return valued

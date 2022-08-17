@@ -49,11 +49,30 @@ RESOURCES = {
 }
 POSTS_TO_RESOURCES = {v: k for k, v in RESOURCES.items()}
 
+GATEWAYS = {"Tripoli": "Alexandria",
+            "Venice": "Constantinople",
+            "Kiev": "Cherson",
+            "Medina": "Palmyra",
+            "Calicut": "Delhi",
+            "Xian": "Dunhuang",
+}
+
+GW_TO_SOURCE = {v: k for k, v in GATEWAYS.items()}
 
 BOARD = nx.Graph(edges)
 
 REAL_NODES = {n for n in BOARD.nodes if 'extra' not in n}
 
+DM = dict(nx.all_pairs_shortest_path_length(BOARD))
+
+IMPORTANT_DESTS = {
+    "Baghdad",
+    "Rayy",
+    "Balkh",
+    "Kashgar",
+    "Merv",
+    "Samarkand"
+}
 
 def get_dsts(src, length, board=BOARD):
     return {
