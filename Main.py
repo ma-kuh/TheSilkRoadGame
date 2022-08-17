@@ -22,3 +22,6 @@ def stdout_contract_cards(num_cards=None):
 
 def generate_post_cards():
     draw_post_cards(BOARD, POSTS_TO_RESOURCES)
+
+if __name__ == "__main__":
+    stdout_contract_cards()
