@@ -11,7 +11,7 @@ resource_to_all_routes = None
 SHORT_ROUTE = [2, 4]
 MED_ROUTE = [4, 7]
 LONG_ROUTE = [7, 12]
-FLAT_REWARD = 2
+FLAT_REWARD = 3
 
 dst_contracts = set()
 
@@ -69,6 +69,27 @@ def gen_start_contract(resource):
     longs = gen_routes_for_dst(GATEWAYS[src], range(*LONG_ROUTE))
     return (shorts[0], meds[0], longs[0])
 
+manual_start_contracts = {
+    'silk': (('Xian', 'Khotan'),
+             ('Xian', 'Merv'),
+             ('Venice', 'Dunhuang')),
+    'spices': (('Calicut', 'Kashgar'),
+               ('Calicut', 'Constantinople'),
+               ('Tripoli', 'Delhi')),
+    'incense': (('Medina', 'Cherson'),
+                ('Medina', 'Delhi'),
+                ('Xian', 'Palmyra')),
+    'fur': (('Kiev', 'Baku'),
+            ('Kiev', 'Rayy'),
+            ('Xian', 'Cherson')),
+    'wine': (('Venice', 'Palmyra'),
+             ('Venice', 'Kashgar'),
+             ('Calicut', 'Constantinople')),
+    'glass': (('Tripoli', 'Constantinople'),
+              ('Tripoli', 'Samarkand'),
+              ('Calicut', 'Alexandria'))
+}
+
 
 def gen_typical_contract(resource):
     src = RESOURCES[resource]
@@ -80,9 +101,9 @@ def gen_typical_contract(resource):
 
 def gen_narrow_contract(resource):
     src = RESOURCES[resource]
-    to_gw = gen_pref_gw_routes(src, range(SHORT_ROUTE[0], MED_ROUTE[1]))[0]
+    to_gw = gen_pref_gw_routes(src, range(MED_ROUTE[0], LONG_ROUTE[1]))[0]
     other_src = GW_TO_SOURCE[to_gw[1]]
-    from_source = (other_src, src)
+    from_source = (other_src, GATEWAYS[src])
     to_source = (src, other_src)
     return (to_gw, from_source, to_source)
 
@@ -121,7 +142,7 @@ def gen_src_contract(resource):
 
 contract_dist_per_resource = {
     gen_typical_contract: 3,
-    gen_narrow_contract: 1,
+    # gen_narrow_contract: 1,
     gen_3res_contract: 1,
     gen_dst_contract: 1,
     gen_src_contract: 1,
@@ -130,7 +151,7 @@ contract_dist_per_resource = {
 
 def value_route(route):
     resource = POSTS_TO_RESOURCES[route[0]]
-    return (resource, route[1], distance(route[0], route[1]) + FLAT_REWARD)
+    return (resource, route[1], DM[route[0]][route[1]] + FLAT_REWARD)
 
 
 def value_triple(triple):
@@ -147,9 +168,11 @@ def value_all_triples(triple_list):
 
 
 def gen_contracts_for_resources():
+    global dst_contracts
+    dst_contracts = set()
     contract_stems = []
-    for res in RESOURCES.keys():
-        for func, count in contract_dist_per_resource.items():
+    for func, count in contract_dist_per_resource.items():
+        for res in RESOURCES.keys():
             for _ in range(count):
                 contract = func(res)
                 # print(str(func), contract)
@@ -164,7 +187,8 @@ def gen_contracts_for_resources():
                 contract_stems.append(contract)
 
     for res in RESOURCES.keys():
-        contract_stems.append(gen_start_contract(res))
+        # contract_stems.append(gen_start_contract(res))
+        contract_stems.append(manual_start_contracts[res])
 
     valued = value_all_triples(contract_stems)
     return valued
